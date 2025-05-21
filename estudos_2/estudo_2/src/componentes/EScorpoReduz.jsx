@@ -1,8 +1,8 @@
 import "./EscorpoReduz.css"
 const EscorpoRduz = () => {
-    function hendleClick() {
+    function hendleClick(elemento) {
         return(
-            alert("hendalClick")
+            elemento.style.backgroundColor =="red"
         )
     }
     return(
