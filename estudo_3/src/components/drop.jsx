@@ -1,52 +1,18 @@
-import {menus} from './dados.js'
+import { menus } from './dados.js';
 
-export default function ListasMap(){
-
-    
-    return(
-
-
-        {menus.map(menu =>(
-        <li className='dropdown'>
-                    <a href=''>{menu}</a>
-                            <div className='dropdown-menu'>
-                                {Ordem(props.lista)}
-                            </div>
-                    
-                </li>
-        )
-            )}
-
-    )
-}
-
-
-
-
-    export default function Dropdown(props){ 
-    
-
-    return(
-        
+export default function Dropdown() {
+    return (
         <nav>
-            <ul>
-                {/* cada chamada a função Estrutura irá criar uma nova lista <ul> */}
+            <ul className="dropdown-container">
+                {menus.map((menu, ) => (
 
-                {menus.map(menu =>
-               {Estrutura(props.titulo[1], props.lista)}
-               
-                )}
-
+                Estrutura(menu.link, menu.nome)
+                    
+                ))}
             </ul>
-            
-           
         </nav>
-               
     );
-
-   
 }
-
 
 function Ordem (lista){
     let retorno = [];
