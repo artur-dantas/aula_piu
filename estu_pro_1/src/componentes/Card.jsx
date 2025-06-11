@@ -1,26 +1,25 @@
-import { useState } from 'react';
 import { tarefa } from "./tarefa"; // Certifique-se de que o caminho está correto
 
 export default function TarefaItem() {
-  // Filtra tarefas NÃO concluídas (verifique o nome do campo!)
-  const tarefasPendentes = tarefa.filter(tare => tare.concluida === false);
-
-
-
-  // Estado para armazenar prioridades (se quiser atualizá-las)
-  const [prioridades, setPrioridades] = useState(
-    tarefasPendentes.reduce((acc, tare) => {
-      acc[tare.id] = tare.prioridade;
-      return acc;
-    }, {})
-  );
+  // Filtra tarefas NÃO concluídas e cria uma cópia para evitar mutação direta
+  const tarefasPendentes = tarefa
+    .filter(tare => tare.concluida === false)
+    .map(tare => ({ ...tare })); // Cria cópias dos objetos de tarefa
 
   // Função para mudar prioridade
   const handleClick = (id) => {
-    setPrioridades(prev => ({
-      ...prev,
-      [id]: prev[id] === 3 ? 1 : prev[id] + 1,
-    }));
+    const tarefaIndex = tarefasPendentes.findIndex(tare => tare.id === id);
+    if (tarefaIndex !== -1) {
+      const novaPrioridade = tarefasPendentes[tarefaIndex].prioridade === 3 
+        ? 1 
+        : tarefasPendentes[tarefaIndex].prioridade + 1;
+      
+      tarefasPendentes[tarefaIndex].prioridade = novaPrioridade;
+      
+      // Forçar re-renderização (não ideal, mas necessário sem estado)
+      // Em uma aplicação real, você precisaria de uma solução melhor
+      window.location.reload();
+    }
   };
 
   // Cor de fundo baseada na prioridade
@@ -36,13 +35,13 @@ export default function TarefaItem() {
         <div 
           key={tare.id}
           className="tarefa-item"
-          style={{ backgroundColor: getCorDeFundo(prioridades[tare.id]) }}
+          style={{ backgroundColor: getCorDeFundo(tare.prioridade) }}
         >
           <h3>{tare.nome}</h3>
           <p>{tare.desc}</p>
-          <p>Prioridade: {prioridades[tare.id]}</p>
+          <p>Prioridade: {tare.prioridade}</p>
           <button onClick={() => handleClick(tare.id)}>
-            Alterar Prioridade ({prioridades[tare.id]})
+            Alterar Prioridade ({tare.prioridade})
           </button>
         </div>
       ))}
