@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 export default function Questao_2() {
     const [postes, setpostes] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [limite, setlimite] = useState(10)
+    const [limite, setlimite] = useState(1)
 
   const fetchpostes = async () => {
   try {
@@ -44,6 +44,7 @@ export default function Questao_2() {
                         <option value="7">7</option>
                         <option value="8">8</option>
                         <option value="9">9</option>
+        
                         <option value="10">10</option>
                        
                     </select>
